@@ -150,6 +150,8 @@ class GroupFinderTweaks
         {
             groupFinderScrollPanel.m_PlayfieldEntries[i]._y += y;
         }
+
+        groupFinderScrollPanel.ContentSizeUpdated();
     }
     
     private function SignUpLeaveClickHandler()
