@@ -84,8 +84,6 @@ class GroupFinderTweaks
         AddMaxEligable("Duo Scenario ", duoScenarios);
         
         CustomLayoutEntries();
-        
-        com.GameInterface.Chat.SignalShowFIFOMessage.Emit(" " + m_lastPlayfieldName, 0);
     }
     
     private function CustomGetSelectedEntries()
