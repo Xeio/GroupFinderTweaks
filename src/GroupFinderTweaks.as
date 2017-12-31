@@ -58,21 +58,24 @@ class GroupFinderTweaks
         
         groupFinderContent.m_SignUpLeaveButton.addEventListener("click", this, "SignUpLeaveClickHandler");
         
-        //Add last remembered queue
-        var newEntry = m_ListContent.attachMovie("PlayfieldEntry", m_ListContent.getUID(), m_ListContent.getNextHighestDepth());
-        newEntry.SetData("Last Queued: " + m_lastPlayfieldName, m_lastPlayfieldId, 0 /*difficulty*/, m_lastPlayfieldImage, [], 0, false);
-		newEntry.SignalEntrySizeChanged.Connect(groupFinderScrollPanel.LayoutEntries, groupFinderScrollPanel);
-		newEntry.SignalEntryToggled.Connect(groupFinderScrollPanel.SlotEntryToggled, groupFinderScrollPanel);
-		newEntry.SignalEntryFocused.Connect(groupFinderScrollPanel.SlotEntryFocused, groupFinderScrollPanel);
-        
-        for (var i in groupFinderScrollPanel.m_PlayfieldEntries)
+        if (m_lastPlayfieldId)
         {
-            var baseEntry = groupFinderScrollPanel.m_PlayfieldEntries[i];
-        
-            baseEntry.SignalEntrySizeChanged.Connect(CustomLayoutEntries, this);
+            //Add last remembered queue
+            var newEntry = m_ListContent.attachMovie("PlayfieldEntry", m_ListContent.getUID(), m_ListContent.getNextHighestDepth());
+            newEntry.SetData("Last Queued: " + m_lastPlayfieldName, m_lastPlayfieldId, 0 /*difficulty*/, m_lastPlayfieldImage, [], 0, false);
+            newEntry.SignalEntrySizeChanged.Connect(groupFinderScrollPanel.LayoutEntries, groupFinderScrollPanel);
+            newEntry.SignalEntryToggled.Connect(groupFinderScrollPanel.SlotEntryToggled, groupFinderScrollPanel);
+            newEntry.SignalEntryFocused.Connect(groupFinderScrollPanel.SlotEntryFocused, groupFinderScrollPanel);
+            
+            for (var i in groupFinderScrollPanel.m_PlayfieldEntries)
+            {
+                var baseEntry = groupFinderScrollPanel.m_PlayfieldEntries[i];
+            
+                baseEntry.SignalEntrySizeChanged.Connect(CustomLayoutEntries, this);
+            }
+            
+            m_customEntries.unshift(newEntry);
         }
-        
-        m_customEntries.unshift(newEntry);
         
         var eliteDungeons = groupFinderScrollPanel.GetEliteDungeons();
         AddMaxEligable("Dungeon ", eliteDungeons);
