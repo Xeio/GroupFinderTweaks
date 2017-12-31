@@ -11,7 +11,6 @@ class GroupFinderTweaks
     var m_baseGetSelectedEntries:Function, m_baseLayoutEntries:Function;
     
     var m_lastPlayfieldName, m_lastPlayfieldId, m_lastPlayfieldImage;
-    var m_lastSelectedEntries;
     
     var LAST_PLAYFIELD_NAME = "LastPlayfieldName";
     var LAST_PLAYFIELD_ID = "LastPlayfieldID";
@@ -34,7 +33,6 @@ class GroupFinderTweaks
 	
 	public function OnLoad()
 	{
-        m_lastSelectedEntries = [];
         m_customEntries = [];
 		setTimeout(Delegate.create(this, SetupUI), 50);
 	}
@@ -181,7 +179,6 @@ class GroupFinderTweaks
 	
 	public function OnUnload()
 	{
-        m_customEntries = [];
         _root.groupfinder.m_Window.m_Content.m_ScrollPanel.GetSelectedEntries = m_baseGetSelectedEntries;
         _root.groupfinder.m_Window.m_Content.m_ScrollPanel.LayoutEntries = m_baseLayoutEntries;
 	}
