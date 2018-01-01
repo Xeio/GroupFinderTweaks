@@ -11,10 +11,12 @@ class GroupFinderTweaks
     var m_baseGetSelectedEntries:Function, m_baseLayoutEntries:Function;
     
     var m_lastPlayfieldName, m_lastPlayfieldId, m_lastPlayfieldImage;
+    var m_privateTeamSaved;
     
-    var LAST_PLAYFIELD_NAME = "LastPlayfieldName";
-    var LAST_PLAYFIELD_ID = "LastPlayfieldID";
-    var LAST_PLAYFIELD_IMAGE = "LastPlayfieldImage";
+    static var LAST_PLAYFIELD_NAME = "LastPlayfieldName";
+    static var LAST_PLAYFIELD_ID = "LastPlayfieldID";
+    static var LAST_PLAYFIELD_IMAGE = "LastPlayfieldImage";
+    static var PRIVATE_TEAM = "PrivateTeamSaved";
 		
 	public static function main(swfRoot:MovieClip):Void 
 	{
@@ -85,6 +87,11 @@ class GroupFinderTweaks
         AddMaxEligable("Duo Scenario ", duoScenarios);
         
         CustomLayoutEntries();
+        
+        if (m_privateTeamSaved)
+        {
+            groupFinderContent.m_SkipQueueCheckBox.selected = true;
+        }
     }
     
     private function CustomGetSelectedEntries()
@@ -155,7 +162,8 @@ class GroupFinderTweaks
     
     private function SignUpLeaveClickHandler()
     {
-        var groupFinderScrollPanel = _root.groupfinder.m_Window.m_Content.m_ScrollPanel;
+        var groupFinderContent = _root.groupfinder.m_Window.m_Content;
+        var groupFinderScrollPanel = groupFinderContent.m_ScrollPanel;
         groupFinderScrollPanel.DisableAllEntries(false, "");
         
         var selectedEntries:Array = CustomGetSelectedEntries();
@@ -174,6 +182,8 @@ class GroupFinderTweaks
             }
         }
         
+        m_privateTeamSaved = groupFinderContent.m_SkipQueueCheckBox.selected;
+        
         groupFinderScrollPanel.DisableAllEntries(true, LDBFormat.LDBGetText("GroupSearchGUI", "JoiningQueue"));
     }
 	
@@ -188,6 +198,7 @@ class GroupFinderTweaks
         m_lastPlayfieldName = config.FindEntry(LAST_PLAYFIELD_NAME);
         m_lastPlayfieldId = config.FindEntry(LAST_PLAYFIELD_ID);
         m_lastPlayfieldImage = config.FindEntry(LAST_PLAYFIELD_IMAGE);
+        m_privateTeamSaved = config.FindEntry(PRIVATE_TEAM);
 	}
 	
 	public function Deactivate(): Archive
@@ -198,6 +209,10 @@ class GroupFinderTweaks
             archive.AddEntry(LAST_PLAYFIELD_NAME, m_lastPlayfieldName);
             archive.AddEntry(LAST_PLAYFIELD_ID, m_lastPlayfieldId);
             archive.AddEntry(LAST_PLAYFIELD_IMAGE, m_lastPlayfieldImage);
+        }
+        if (m_privateTeamSaved)
+        {
+            archive.AddEntry(PRIVATE_TEAM, m_privateTeamSaved);
         }
 		return archive;
 	}
