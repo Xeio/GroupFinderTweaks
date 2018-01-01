@@ -172,7 +172,7 @@ class GroupFinderTweaks
         {
             var playfield = selectedEntries[i];
             
-            if (playfield.m_Id > 0)
+            if (playfield.m_Id > 0 && playfield.m_Name.text.indexOf("Last Queued") == -1)
             {
                 m_lastPlayfieldId = playfield.m_Id;
                 m_lastPlayfieldName = playfield.m_Name.text;
