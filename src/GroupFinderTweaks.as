@@ -1,3 +1,4 @@
+import com.GameInterface.DistributedValueBase;
 import com.GameInterface.GroupFinder;
 import mx.utils.Delegate;
 import com.Utils.Archive;
@@ -78,13 +79,19 @@ class GroupFinderTweaks
         }
         
         var eliteDungeons = groupFinderScrollPanel.GetEliteDungeons();
-        AddMaxEligable("Dungeon ", eliteDungeons);
+        AddMaxEligable("Dungeon ", eliteDungeons, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxDungeonLevel"));
         
         var soloScenarios = groupFinderScrollPanel.GetSoloScenarios();
-        AddMaxEligable("Solo Scenario ", soloScenarios);
+        AddMaxEligable("Solo Scenario ", soloScenarios, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxSeekAndPreserveLevel"));
         
         var duoScenarios = groupFinderScrollPanel.GetDuoScenarios();
-        AddMaxEligable("Duo Scenario ", duoScenarios);
+        AddMaxEligable("Duo Scenario ", duoScenarios, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxSeekAndPreserveLevel"));
+        
+        var occultSolos = groupFinderScrollPanel.GetOccultDefenceSoloScenarios();
+        AddMaxEligable("Solo Ocult Defense ", occultSolos, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxOccultLevel"));
+        
+        var occultDuos = groupFinderScrollPanel.GetOccultDefenceDuoScenarios();
+        AddMaxEligable("Duo Occult Defense ", occultDuos, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxOccultLevel"));
         
         CustomLayoutEntries();
         
@@ -106,7 +113,7 @@ class GroupFinderTweaks
         return selectedEntries;
     }
     
-    private function AddMaxEligable(namePrefix, playfieldEntries)
+    private function AddMaxEligable(namePrefix, playfieldEntries, maxLevel)
     {
         var groupFinderScrollPanel = _root.groupfinder.m_Window.m_Content.m_ScrollPanel;
         var m_ListContent = groupFinderScrollPanel.m_ListContent;
@@ -117,6 +124,16 @@ class GroupFinderTweaks
             var missingReqs = GroupFinder.CheckQueueRequirements(playfieldEntries[i].queueId, true);
             if (missingReqs == "")
             {
+                if (maxLevel != undefined)
+                {
+                    var name:String = playfieldEntries[i].playfieldName;
+                    var level = parseInt(name.substring(name.lastIndexOf(" "), name.length));
+                    if (level != NaN && level > maxLevel)
+                    {
+                        continue;
+                    }
+                }
+                
                 maxPlayfieldLevel = playfieldEntries[i];
             }
         }

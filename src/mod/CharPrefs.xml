@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?> 
 <Root>
   <Value name="GroupFinderTweaks" value="true" />
+  <Value name="GroupFinderTweaks_MaxOccultLevel" value="undefined" />
+  <Value name="GroupFinderTweaks_MaxDungeonLevel" value="undefined" />
+  <Value name="GroupFinderTweaks_MaxSeekAndPreserveLevel" value="undefined" />
   <Archive name="GroupFinderTweaks_Cfg" />
 </Root>
