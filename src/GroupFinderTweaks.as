@@ -88,10 +88,10 @@ class GroupFinderTweaks
         AddMaxEligable("Duo Scenario ", duoScenarios, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxSeekAndPreserveLevel"));
         
         var occultSolos = groupFinderScrollPanel.GetOccultDefenceSoloScenarios();
-        AddMaxEligable("Solo Ocult Defense ", occultSolos, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxOccultLevel"));
+        AddMaxEligable("Solo Occult Defense ", occultSolos, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxOccultLevel"));
         
-        var occultDuos = groupFinderScrollPanel.GetOccultDefenceDuoScenarios();
-        AddMaxEligable("Duo Occult Defense ", occultDuos, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxOccultLevel"));
+        var occultGroup = groupFinderScrollPanel.GetOccultDefenceGroupScenarios();
+        AddMaxEligable("Group Occult Defense ", occultGroup, DistributedValueBase.GetDValue("GroupFinderTweaks_MaxOccultLevel"));
         
         CustomLayoutEntries();
         
